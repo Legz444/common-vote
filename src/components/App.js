@@ -85,35 +85,35 @@ function App() {
                   handleRegister={handleRegister}/>
               );
             }}/>
-            <Route
+            {/* <Route
               path="/logout"
               render={(props) => {
                 return (
                   <LogOut isLoggedIn={isLoggedIn}
                   handleLogOut={handleLogOut}/>
                 );
-              }}/>
-              <Route
+              }}/> */}
+              {/* <Route
                 path="/profile"
                 render={(props) =>{
                   return(
                     <Profile/>
                   )
-                }}/>
-              <Route
+                }}/> */}
+              {/* <Route
                 path="/about"
                 render={(props) =>{
                   return(
                   <About/>
                   );
-                }}/>
-              <Route
+                }}/> */}
+              {/* <Route
                 path="/vote"
                 render={(props) =>{
                   return(
-                    <Vote/>
+                    // <Vote/>
                   );
-                }}/>
+                }}/> */}
               <Route
                 path="/"
                 render={(props) =>{
