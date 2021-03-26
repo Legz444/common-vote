@@ -37,7 +37,7 @@ function NavBar(props) {
 
     return(
         <>
-        <h1>CommonVote</h1>
+        <img src="https://res.cloudinary.com/legz444/image/upload/v1616790149/Common_vgwgbf.png" width="200px" height="200px"/>
         <nav>
             <ul>{navLinks}</ul>
         </nav>

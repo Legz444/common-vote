@@ -3,7 +3,7 @@ import './login.css';
 export default function LogInForm () {
     return(
         <form className="form-signin">
-            <img className="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"/>
+            <img className="mb-4" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" alt="" width="72" height="72"/>
             <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div className="form-floating">
@@ -15,7 +15,8 @@ export default function LogInForm () {
             <label HTMLfor="floatingPassword">Password</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <a href="/register">Need to Sign Up?</a>
         </form>
 
     )
