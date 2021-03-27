@@ -3,7 +3,7 @@ import './login.css';
 export default function LogInForm () {
     return(
         <form className="form-signin">
-            <img className="mb-4" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" alt="" width="72" height="72"/>
+            <img className="m-auto" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" alt="" width="80" height="80"/>
             <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div className="form-floating">

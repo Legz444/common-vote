@@ -1,10 +1,12 @@
 html,
 body {
   height: 100%;
+  width: 100%;
 }
 
 body {
   display: flex;
+  flex-direction: column;
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -14,10 +16,13 @@ body {
 .form-signin {
   width: 100%;
   max-width: 330px;
-  padding: 15px;
+  padding: 45px;
+  margin: auto;
+  box-shadow: 10px 5px 5px lightgrey;
+}
+.form-signin img{
   margin: auto;
 }
-
 .form-signin .checkbox {
   font-weight: 400;
 }

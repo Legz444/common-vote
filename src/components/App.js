@@ -71,6 +71,10 @@ function App() {
   };
 
   return (
+    <>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    </head>
     <div className="App_page">
       <NavBar isLoggedIn={isLoggedIn}/>
       <div className="main">
@@ -127,6 +131,7 @@ function App() {
         </Switch>
       </div>
     </div>
+    </>
   );
 }
 
