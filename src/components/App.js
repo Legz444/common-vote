@@ -9,6 +9,7 @@ import About from './About/whyVote';
 import LogInForm from './LogInForm/login';
 import LogOut from './LogOut/logout';
 import Profile from './Profile/profile';
+import Vote from './Vote/vote';
 
 
 function App() {
@@ -111,13 +112,13 @@ function App() {
                   <About/>
                   );
                 }}/> */}
-              {/* <Route
+              <Route
                 path="/vote"
                 render={(props) =>{
                   return(
-                    // <Vote/>
+                    <Vote/>
                   );
-                }}/> */}
+                }}/>
               <Route
                 path="/"
                 render={(props) =>{
