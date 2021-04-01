@@ -8,11 +8,11 @@ export default function LogInForm () {
 
             <div className="form-floating">
                 <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com"/>
-                <label HTMLfor="floatingInput">Email address</label>
+                <label htmlFor="floatingInput">Email address</label>
             </div>
             <div className="form-floating">
             <input type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
-            <label HTMLfor="floatingPassword">Password</label>
+            <label htmlFor="floatingPassword">Password</label>
             </div>
 
             <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>

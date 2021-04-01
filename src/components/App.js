@@ -51,7 +51,9 @@ function App() {
         password: state.password
       });
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.id);
       setIsLoggedIn(true);
+      console.log("User has registered");
     }catch(err){
       console.log(err);
     }
@@ -65,7 +67,9 @@ function App() {
         password: state.password
       });
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.id);
       setIsLoggedIn(true)
+      console.log("User is logged in");
     }catch(err){
       console.log(err)
     }
@@ -73,9 +77,9 @@ function App() {
 
   return (
     <>
-    <head>
+    {/* <head>
       <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-    </head>
+    </head> */}
     <div className="App_page">
       <NavBar isLoggedIn={isLoggedIn}/>
       <div className="main">
@@ -90,14 +94,14 @@ function App() {
                   handleRegister={handleRegister}/>
               );
             }}/>
-            {/* <Route
+            <Route
               path="/logout"
               render={(props) => {
                 return (
                   <LogOut isLoggedIn={isLoggedIn}
                   handleLogOut={handleLogOut}/>
                 );
-              }}/> */}
+              }}/>
               {/* <Route
                 path="/profile"
                 render={(props) =>{

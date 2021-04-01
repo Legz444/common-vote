@@ -9,15 +9,15 @@ export default function RegisterForm () {
 
             <div className="form-floating">
                 <input type="text" className="form-control" id="floatingInput" placeholder="First name"/>
-                <label HTMLfor="floatingInput">First Name</label>
+                <label htmlFor="floatingInput">First Name</label>
             </div>
             <div className="form-floating">
                 <input type="text" className="form-control" id="floatingInput" placeholder="Last name"/>
-                <label HTMLfor="floatingInput">Last Name</label>
+                <label htmlFor="floatingInput">Last Name</label>
             </div>
             <div className="form-floating">
                 <input type="date" className="form-control" id="floatingInput"/>
-                <label HTMLfor="floatingInput">Age</label>
+                <label htmlFor="floatingInput">Age</label>
             </div>
             <div className="form-floating">
                 <input type="radio" className="form-control"/>
@@ -40,14 +40,14 @@ export default function RegisterForm () {
             </div>
             <div className="form-floating">
                 <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com"/>
-                <label HTMLfor="floatingInput">Email address</label>
+                <label htmlFor="floatingInput">Email address</label>
             </div>
             <div className="form-floating">
                 <input type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
-                <label HTMLfor="floatingPassword">Password</label>
+                <label htmlFor="floatingPassword">Password</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Start Voting</button>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">Start Voting</button>
                 
         </form>
         </>

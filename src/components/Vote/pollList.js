@@ -3,7 +3,7 @@ import axios from 'axios';
 import Vote from './vote';
 
 const PollList = (props) => {
-    const [poll, setPoll] = useState([]);
+    const [poll, setPoll] = useState({});
 
     useEffect(() => {
         async function fetchData() {
