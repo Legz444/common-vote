@@ -10,12 +10,18 @@ import LogInForm from './LogInForm/login';
 import LogOut from './LogOut/logout';
 import Profile from './Profile/profile';
 import Vote from './Vote/vote';
+import PollList from "./Vote/pollList";
 
 
 function App() {
   const [state, setState] = useState({
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    isRegistered: false, 
+    party: "",
     isLoggedIn: false
   });
 
@@ -48,7 +54,12 @@ function App() {
     try{
       const response = await axios.post("http://localhost:3001/register", {
         email: state.email,
-        password: state.password
+        password: state.password,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        dob: state.dob,
+        isRegistered: state.isRegistered,
+        party: state.party
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.id);
@@ -120,7 +131,7 @@ function App() {
                 path="/vote"
                 render={(props) =>{
                   return(
-                    <Vote/>
+                    <PollList/>
                   );
                 }}/>
               <Route

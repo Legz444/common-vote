@@ -1,71 +1,44 @@
 import React from 'react';
-
+import {Card, Row, Container, InputGroup} from 'react-bootstrap';
 
 
 export default function Vote(props){
-    const voterDemographic = props.politicalPoll.voterDemographic;
+    const voterDemographic = props.poll.voterDemographic;
+    const voterDemographicAns = props.poll.voterDemographic[0].answers;
     console.log(voterDemographic);
-
+    console.log(voterDemographicAns);
     return(
         <>
-        <div className="accordion" id="accordionExample">
-            <div className="card">
-                <div className="card-header" id="headingOne">
-                    <h5 className="mb-0">
-                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Basic Voter Information
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <div className="card-body">
-                        {voterDemographic.map(item => {
-                                return(
-                                    <div className="card card-body">
-                                        <h5 className="card-title">{item.question}</h5>
-                                        {voterDemographic.answers.map(answer => {
-                                            return(
-                                                <ul className="list-group">
-                                                    <li className="list-group-item" key={answer._id}>{answer.answers}</li>
-                                                </ul>
-                                            )
-                                        })}
-                                    </div>
-                                );
-                            })}
-                    </div>
-                </div>
-            </div>
-            <div className="card">
-                <div className="card-header" id="headingTwo">
-                <h5 className="mb-0">
-                    <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Collapsible Group Item #2
-                    </button>
-                </h5>
-                </div>
-                <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div className="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-                </div>
-            </div>
-            <div className="card">
-                <div className="card-header" id="headingThree">
-                <h5 className="mb-0">
-                    <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Collapsible Group Item #3
-                    </button>
-                </h5>
-                </div>
-                <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div className="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-                </div>
-            </div>
-            </div>
-            </>
+        <Container>
+            <Row>
+                <Card>
+                <h5>Basic Voter Information</h5>
+
+                {voterDemographic.length ? voterDemographic.map(item => {
+                    return(
+                        <>
+                        <Card>
+                        <h3>{item.question}</h3>
+                        {voterDemographicAns.length ? voterDemographicAns.map(answer => {
+                            return(
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Radio aria-label="Radio-btn" ></InputGroup.Radio>
+                                    </InputGroup.Prepend>
+                                    <InputGroup.Text>{answer}</InputGroup.Text>
+                                </InputGroup>
+                            )}): ""}
+                            <div>
+                                <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px"></input>
+                                <p>Vote</p>
+                            </div>
+                        </Card>
+                    </>
+                ) }): ""}
+                </Card>
+            </Row>
+        </Container>
+    </>
     )
 }
 
