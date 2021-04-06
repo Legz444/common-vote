@@ -1,9 +1,13 @@
 import './vote.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Card, InputGroup, Accordion } from 'react-bootstrap';
 
 
+
 export default function Vote(props){
+    // const[userVote, setUserVote] = useState({});
+    // const[answer, setAnswer] = useState({});
+    // const[data, setData] = useEffect({});
 
     const poll = props.poll;
     const voterDemographic = props.poll.voterDemographic;
@@ -14,30 +18,41 @@ export default function Vote(props){
 
     console.log(poll);
 
-    // const parseAns = () => {
-    //     voterDemographic.forEach(item => {
-    //         const getAnswers = Object.entries(item);
-    //         const ansArray= getAnswers[1];
-    //         console.log(ansArray);
-    //     })
-    // }
-    // parseAns();
-
-// voterDemographic.forEach(item => {
-//         const grabAnswers = Object.entries(item);
-//         const ansArray= grabAnswers[1];
-//         console.log(ansArray);
-//     })
-
-const grabAnswers = () => {
-    voterDemographic.forEach(item => {
-        Object.entries(item);
+    //map over the category and return an array of each objects answers
+    let parsedAns = voterDemographic.map(item => {
+        const grabAnswers =Object.entries(item);
+        return (grabAnswers[1]);
     })
-}
-grabAnswers();
-console.log(grabAnswers);
+    console.log(parsedAns);
 
-    const voterDemographicAns = props.poll.voterDemographic[0].answers;
+// (8) [Array(2), Array(2), Array(2), Array(2), Array(2), Array(2), Array(2), Array(2)]
+//      0: Array(2)
+//      0: "answers"
+//      1: (7) ["Democrat", "Green Party", "Independant", "Libertarian", "Other", "Republican", "Unaffiliated"]
+
+    console.log(parsedAns[0][1]);
+//   ["Democrat", "Green Party", "Independant", "Libertarian", "Other", "Republican", "Unaffiliated"]
+    
+// map over parsedAns array, for every item, return that item's index [1]
+    let a = parsedAns.map(i => {
+        return [i][1]
+    })
+    console.log(a);
+    //why is this undefined???
+
+
+//when a radio button is clicked, update the value for that questions answers to the value of the targeted radio button.
+    // const setValue = (e) => {
+    //     setAnswer(e.target.value)
+    // }
+
+//when submit button is clicked, update the data for the user. Also update the totals data for the charts.
+    // const submitVote = (e) => {
+    //     setUserVote();
+    //     setData();
+
+    // }
+
 
     return(
         <>
@@ -51,7 +66,7 @@ console.log(grabAnswers);
                                 <Card>
                                     <h3 className="question">{item.question}</h3>
 
-                                        {voterDemographicAns.length ? voterDemographicAns.map(answer => {
+                                        {parsedAns.length ? parsedAns.map(answer => {
                                             return(
                                                 <>
                                                 <InputGroup className="mb-3">
@@ -63,7 +78,7 @@ console.log(grabAnswers);
                                                 </>
                                             )}): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px"></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" ></input>
                                         <p>Vote</p>
                                     </div>
                                 </Card>
