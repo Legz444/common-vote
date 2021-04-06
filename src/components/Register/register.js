@@ -24,21 +24,6 @@ export default function RegisterForm (props) {
                 <label>Registered to Vote?</label>
             </div>
             <div className="form-floating">
-                <p>Affiliated Party</p>
-                <input type="radio" className="form-control" name="party" onChange={props.handleInput}/>
-                <label>Democrat</label>
-                <input type="radio" className="form-control" name="party" onChange={props.handleInput}/>
-                <label>Green Party</label>
-                <input type="radio" className="form-control" name="party" onChange={props.handleInput}/>
-                <label>Independant</label>
-                <input type="radio" className="form-control" name="party" onChange={props.handleInput}/>
-                <label>Libertarian</label>
-                <input type="radio" className="form-control" name="party" onChange={props.handleInput}/>
-                <label>Republican</label>
-                <input type="radio" className="form-control" name="party" onChange={props.handleInput}/>
-                <label>Other</label>
-            </div>
-            <div className="form-floating">
                 <input type="email" className="form-control" id="floatingInput" name="email" placeholder="name@example.com" onChange={props.handleInput}/>
                 <label htmlFor="floatingInput">Email address</label>
             </div>
