@@ -5,11 +5,8 @@ import axios from "axios";
 import './App.css';
 import NavBar from './Navigation/NavBar';
 import RegisterForm from './Register/register';
-import About from './About/whyVote';
 import LogInForm from './LogInForm/login';
 import LogOut from './LogOut/logout';
-import Profile from './Profile/profile';
-import Vote from './Vote/vote';
 import PollList from "./Vote/pollList";
 
 
@@ -113,20 +110,6 @@ function App() {
                   handleLogOut={handleLogOut}/>
                 );
               }}/>
-              {/* <Route
-                path="/profile"
-                render={(props) =>{
-                  return(
-                    <Profile/>
-                  )
-                }}/> */}
-              {/* <Route
-                path="/about"
-                render={(props) =>{
-                  return(
-                  <About/>
-                  );
-                }}/> */}
               <Route
                 path="/vote"
                 render={(props) =>{

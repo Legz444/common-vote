@@ -159,5 +159,3 @@ export default function Vote(props){
     )
 }
 
-
-// /*I want to display the answers for each object within each category as radio buttons. I can map over each object and display the question, because it is a single string within the item in which I am mapping(array of objects). The answers are arrays within the item object(array within an object within an array). If I pass item.answers, It gives me all the answers in one block. I need to map over the array of answers and display each of them in a radio button. When trying to map this array it didn't work, becasue it is an array within an object. I can map over the answers when I put them in a variable, but then because I am mapping each item, every question has the same answers from the first question. How do I display each answer for the corresponding question as a radio button without hard coding everything?*/
