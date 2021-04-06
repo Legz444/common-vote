@@ -14,50 +14,30 @@ export default function Vote(props){
 
     console.log(poll);
 
-    // for(i=0; i<voterDemographic.length; i++){
-    //     const voterDemographicAns = voterDemographic.answers.filter()
-    //     console.log(voterDemographicAns);
+    // const parseAns = () => {
+    //     voterDemographic.forEach(item => {
+    //         const getAnswers = Object.entries(item);
+    //         const ansArray= getAnswers[1];
+    //         console.log(ansArray);
+    //     })
     // }
-    const parseAns = () => {
-        voterDemographic.forEach(item => {
-            const getAnswers = Object.entries(item);
-            const ansArray= getAnswers[1];
-            console.log(ansArray);
-        })
-    }
-    parseAns();
+    // parseAns();
 
-// const parseAns = () =>{
-//             const getAnswers = voterDemographic.filter(function (item) {
-//                 return item.answers
-//             });
-//             console.log(getAnswers[0]);
-//     }
-// parseAns();
+// voterDemographic.forEach(item => {
+//         const grabAnswers = Object.entries(item);
+//         const ansArray= grabAnswers[1];
+//         console.log(ansArray);
+//     })
+
+const grabAnswers = () => {
+    voterDemographic.forEach(item => {
+        Object.entries(item);
+    })
+}
+grabAnswers();
+console.log(grabAnswers);
 
     const voterDemographicAns = props.poll.voterDemographic[0].answers;
-
-
-
-    // let getAnswers=(i)=>{
-    //     for(i=0; i<voterDemographic.length; i++){
-    //         voterDemographic[i].filter(function(el)
-    //             {
-    //                 return(
-    //                     [el.answers]
-    //                 );
-    //             }
-    //         )
-    //     }
-    // }
-    // getAnswers();
-    // console.log(getAnswers);
-
-
- 
-
-    // console.log(voterDemographic);
-
 
     return(
         <>
