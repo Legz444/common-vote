@@ -64,24 +64,23 @@ export default function Vote(props){
 
     console.log(poll);
 
-    //Parse out answers array from object to be mapped in.---How to loop this function over all categories??
-    //map over the category and return an array of each objects answers
-    let parsedAns = voterDemographic.map(item => {
-        const grabAnswers =Object.entries(item);
-        return (grabAnswers[1]);
-    })
-    console.log(parsedAns);
-    // map over parsedAns array, for every item, return that item's index [1] which is just the answers.
-    let a = parsedAns.map(i => {
-        return i[1]
-    })
-    console.log(a);
+    // // //Parse out answers array from object to be mapped in.---How to loop this function over all categories??
+    // // //map over the category and return an array of each objects answers
+    // let parsedAns = voterDemographic.map(item => {
+    //     const grabAnswers =Object.entries(item);
+    //     return (grabAnswers[1]);
+    // })
+    // console.log(parsedAns);
+    // // // map over parsedAns array, for every item, return that item's index [1] which is just the answers.
+    // let a = parsedAns.map(i => {
+    //     return i[1]
+    // })
+    // console.log(a);
 
 //////Voting functionality//////
 
 //when a radio button is clicked, update the value for that questions answers to the value of the targeted radio button.
     const setValue = (e) => {
-        e.preventdefault();
         setAnswer({...answer, [e.target.name] : e.target.value})
     }
 
@@ -106,10 +105,8 @@ export default function Vote(props){
                                 <Accordion.Collapse eventKey="0">
                                 <Card>
                                     <h3 className="question">{item.question}</h3>
-
-                                        {a.length ? a.map(subarray => {
-                                            return subarray.length ? subarray.map(i => {
-                                                return(
+                                        {item.answers && item.answers.length ? item.answers.map(i => {
+                                            return(
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
@@ -118,8 +115,13 @@ export default function Vote(props){
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
                                                     </>
-                                                )}) : ""
+                                            )
                                         }): ""}
+                                        {/* {a.length ? a.map(subarray => {
+                                            return subarray.length ? subarray.map(i => {
+                                                
+                                                )}) : ""
+                                        }): ""} */}
                                     <div>
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
