@@ -11,15 +11,15 @@ import PollList from "./Vote/pollList";
 
 
 function App() {
-  const [state, setState] = useState({
+  const [userState, setUserState] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
     dob: "",
     isRegistered: false, 
-    party: "",
-    isLoggedIn: false
+    isLoggedIn: false,
+    votes: []
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,7 +34,7 @@ function App() {
 
 
   const handleLogOut = () => {
-    setState({
+    setUserState({
       email: "",
       password: "",
       isLoggedIn: false,
@@ -43,20 +43,21 @@ function App() {
   };
 
   const handleInput = (e) => {
-    setState({...state, [e.target.name]: e.target.value });
+    setUserState({...userState, [e.target.name]: e.target.value });
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try{
       const response = await axios.post("http://localhost:3001/register", {
-        email: state.email,
-        password: state.password,
-        firstName: state.firstName,
-        lastName: state.lastName,
-        dob: state.dob,
-        isRegistered: state.isRegistered,
-        party: state.party
+        email: userState.email,
+        password: userState.password,
+        firstName: userState.firstName,
+        lastName: userState.lastName,
+        dob: userState.dob,
+        isRegistered: userState.isRegistered,
+        id: userState.id,
+        votes: userState.votes
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.id);
@@ -71,8 +72,8 @@ function App() {
     e.preventDefault();
     try{
       const response = await axios.post("http://localhost:3001/", {
-        email: state.email,
-        password: state.password
+        email: userState.email,
+        password: userState.password
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.id);
