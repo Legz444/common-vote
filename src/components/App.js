@@ -84,6 +84,19 @@ function App() {
     }
   };
 
+  const submitVote = async (e) => {
+    e.preventDefault();
+    try{
+        const response= await axios.post("http://localhost:3001/vote", {
+            votes: userState.votes
+        });
+        localStorage.setItem('votes', response.data.votes);
+        setUserState(response.data);
+    }catch(err){
+        console.log(err);
+    }
+}
+
   return (
     <>
     {/* <head>

@@ -92,18 +92,7 @@ const [userState, setUserState] = useState({
     // };
 
 //when submit button is clicked, update the state for the user. Also update the totals data for the charts.
-    const submitVote = async (e) => {
-        e.preventDefault();
-        try{
-            const response= await axios.post("http://localhost:3001/vote", {
-                votes: userState.votes
-            });
-            localStorage.setItem(response.data);
-            setUserState(response.data);
-        }catch(err){
-            console.log(err);
-        }
-    }
+
 //Total calculation function//
 
 
@@ -131,9 +120,10 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    <canvas id="dis-chart"></canvas>
                                 </Card>
                                 </Accordion.Collapse>
                                 </>
@@ -160,9 +150,10 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    <canvas id="dis-chart"></canvas>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -189,9 +180,10 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    <canvas id="dis-chart"></canvas>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -218,9 +210,10 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    <canvas id="dis-chart"></canvas>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -247,9 +240,10 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    <canvas id="dis-chart"></canvas>
                         </Card>
                         </Accordion.Collapse>
                     </>
