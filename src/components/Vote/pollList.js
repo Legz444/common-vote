@@ -14,11 +14,11 @@ const PollList = (props) => {
             setPoll(response.data);
         }
         fetchData();
-    }, []);
+    }, [poll]);
 
         return(
             <div>
-                {Object.keys(poll).length? <Vote  poll={poll} isLoggedIn={props.isLoggedIn}/>: ''}
+                {Object.keys(poll).length? <Vote  poll={poll} isLoggedIn={props.isLoggedIn} submitVote={props.submitVote}/>: ''}
             </div>
         );
 

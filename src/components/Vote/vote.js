@@ -18,37 +18,42 @@ import axios from 'axios';
 
 export default function Vote(props){
 //////States//////
-
+const [userState, setUserState] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    isRegistered: false, 
+    isLoggedIn: false,
+    votes: ""
+  });
 // the initial state of the user is either, empty if they haven't voted on this question already, or whatever previous value they chose.
-    const [userState, setUserState] = useState({
-        votes: ""
-    });
+    // const [userState, setUserState] = useState({
+    //     votes: ""
+    // });
 
     //this initial state of radio buttons is empty
-    const [answer, setAnswer] = useState("");
+    // const [answer, setAnswer] = useState("");
 
+    //BACKEND?
     //the initial state of the totals is the accumulation of all votes for that question
     //I need the total for each answer for that question. I need to pass in the answers index and total value. do I spread in the poll??s
-    const[total, setTotal] = useState({
-        question: "",
-        answers: [
+    // const[total, setTotal] = useState({
+    //     question: "",
+    //     answers: [
 
-        ]
-    });
+    //     ]
+    // });
 
     useEffect(() => {
         (async() => {             
         try{
             const response = await axios.post("./http://localhost:3001/vote", {
                 votes: userState.votes
-            },
-            {
-                answer: total.answer
             })
             const data = await response.json();
-
-            setUserState(data.userState);
-            setTotal(data.total);    
+            setUserState(data.userState);  
         }catch(e){
             console.log(e);
         }
@@ -61,8 +66,6 @@ export default function Vote(props){
     const currentSystem = props.poll.currentSystem;
     const economics = props.poll.economics;
     const foreignPolicy = props.poll.foreignPolicy;
-
-    console.log(poll);
 
     // // //Parse out answers array from object to be mapped in.---How to loop this function over all categories??
     // // //map over the category and return an array of each objects answers
@@ -80,16 +83,26 @@ export default function Vote(props){
 //////Voting functionality//////
 
 //when a radio button is clicked, update the value for that questions answers to the value of the targeted radio button.
-    const setValue = (e) => {
-        setAnswer({...answer, [e.target.name] : e.target.value})
-    }
+    // const setValue = (e) => {
+    //     setAnswer({
+    //         ...answer,
+    //         ...{[e.target.name] : e.target.value}
+    //     });
+    //     console.log(e.target);
+    // };
 
 //when submit button is clicked, update the state for the user. Also update the totals data for the charts.
-    const submitVote = (e) => {
-        e.preventdefault();
-        setUserState(...userState, )
-        setTotal({...answer, ...total, [e.target.name] : e.target.value});
-
+    const submitVote = async (e) => {
+        e.preventDefault();
+        try{
+            const response= await axios.post("http://localhost:3001/vote", {
+                votes: userState.votes
+            });
+            localStorage.setItem(response.data);
+            setUserState(response.data);
+        }catch(err){
+            console.log(err);
+        }
     }
 //Total calculation function//
 
@@ -110,18 +123,13 @@ export default function Vote(props){
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
-                                                            <InputGroup.Radio aria-label="Radio-btn" onClick={setValue} ></InputGroup.Radio>
+                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
                                                     </>
                                             )
                                         }): ""}
-                                        {/* {a.length ? a.map(subarray => {
-                                            return subarray.length ? subarray.map(i => {
-                                                
-                                                )}) : ""
-                                        }): ""} */}
                                     <div>
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
@@ -139,10 +147,22 @@ export default function Vote(props){
                         <Accordion.Collapse eventKey="1">
                         <Card>
                         <h3 className="question">{item.question}</h3>
-                            <div>
-                                <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px"></input>
-                                <p>Vote</p>
-                            </div>
+                        {item.answers && item.answers.length ? item.answers.map(i => {
+                                            return(
+                                                    <>
+                                                    <InputGroup className="mb-3">
+                                                        <InputGroup.Prepend>
+                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                        </InputGroup.Prepend>
+                                                        <InputGroup.Text>{i}</InputGroup.Text>
+                                                    </InputGroup>
+                                                    </>
+                                            )
+                                        }): ""}
+                                    <div>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <p>Vote</p>
+                                    </div>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -156,10 +176,22 @@ export default function Vote(props){
                         <Accordion.Collapse eventKey="2">
                         <Card>
                         <h3 className="question">{item.question}</h3>
-                            <div>
-                                <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px"></input>
-                                <p>Vote</p>
-                            </div>
+                        {item.answers && item.answers.length ? item.answers.map(i => {
+                                            return(
+                                                    <>
+                                                    <InputGroup className="mb-3">
+                                                        <InputGroup.Prepend>
+                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                        </InputGroup.Prepend>
+                                                        <InputGroup.Text>{i}</InputGroup.Text>
+                                                    </InputGroup>
+                                                    </>
+                                            )
+                                        }): ""}
+                                    <div>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <p>Vote</p>
+                                    </div>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -173,10 +205,22 @@ export default function Vote(props){
                         <Accordion.Collapse eventKey="3">
                         <Card>
                         <h3 className="question">{item.question}</h3>
-                            <div>
-                                <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px"></input>
-                                <p>Vote</p>
-                            </div>
+                        {item.answers && item.answers.length ? item.answers.map(i => {
+                                            return(
+                                                    <>
+                                                    <InputGroup className="mb-3">
+                                                        <InputGroup.Prepend>
+                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                        </InputGroup.Prepend>
+                                                        <InputGroup.Text>{i}</InputGroup.Text>
+                                                    </InputGroup>
+                                                    </>
+                                            )
+                                        }): ""}
+                                    <div>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <p>Vote</p>
+                                    </div>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -190,10 +234,22 @@ export default function Vote(props){
                         <Accordion.Collapse eventKey="4">
                         <Card>
                         <h3 className="question">{item.question}</h3>
-                            <div>
-                                <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px"></input>
-                                <p>Vote</p>
-                            </div>
+                        {item.answers && item.answers.length ? item.answers.map(i => {
+                                            return(
+                                                    <>
+                                                    <InputGroup className="mb-3">
+                                                        <InputGroup.Prepend>
+                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                        </InputGroup.Prepend>
+                                                        <InputGroup.Text>{i}</InputGroup.Text>
+                                                    </InputGroup>
+                                                    </>
+                                            )
+                                        }): ""}
+                                    <div>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <p>Vote</p>
+                                    </div>
                         </Card>
                         </Accordion.Collapse>
                     </>

@@ -19,7 +19,7 @@ function App() {
     dob: "",
     isRegistered: false, 
     isLoggedIn: false,
-    votes: []
+    votes: ""
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -115,7 +115,10 @@ function App() {
                 path="/vote"
                 render={(props) =>{
                   return(
-                    <PollList/>
+                    <PollList
+                    handleInput={handleInput}
+                    submitVote = {submitVote}
+                    />
                   );
                 }}/>
               <Route
