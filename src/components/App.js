@@ -19,11 +19,11 @@ function App() {
     dob: "",
     isRegistered: false, 
     isLoggedIn: false,
-    votes: ""
+    id: ""
   });
-
+  
+  //initial state of logged in is false. useEffect allows that to change when a token is given to the user in local storage
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useEffect(() => {
     if(localStorage.token) {
       setIsLoggedIn(true);
@@ -32,7 +32,15 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  //use effect allows the votes to be pushed into the users votes array.
+  // useEffect((votes) => {
+  //   userState.votes.length ? {
+  //     votes.push(userState.votes)
+  //   } : "0"    
+  // }, [userState])
 
+
+  //event listener sets isloggedin to false when the user logs out
   const handleLogOut = () => {
     setUserState({
       email: "",
@@ -42,10 +50,13 @@ function App() {
     localStorage.clear();
   };
 
+
+  //event listener sets the value for the targeting input fields-register, login, voting radio btns
   const handleInput = (e) => {
     setUserState({...userState, [e.target.name]: e.target.value });
   };
 
+  //event listener submits the registering user into localstorage with a unique id and shows they are logged in
   const handleRegister = async (e) => {
     e.preventDefault();
     try{
@@ -56,11 +67,10 @@ function App() {
         lastName: userState.lastName,
         dob: userState.dob,
         isRegistered: userState.isRegistered,
-        id: userState.id,
-        votes: userState.votes
+        id: userState.id
       });
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('userId', response.data.id);
+      localStorage.setItem('id', JSON.stringify(response.data.id));
       setIsLoggedIn(true);
       console.log("User has registered");
     }catch(err){
@@ -68,6 +78,7 @@ function App() {
     }
   };
 
+  //event listener allows user to log in again
   const handleLogIn = async (e) => {
     e.preventDefault();
     try{
@@ -76,7 +87,7 @@ function App() {
         password: userState.password
       });
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('userId', response.data.id);
+      localStorage.setItem('id', response.data.id);
       setIsLoggedIn(true)
       console.log("User is logged in");
     }catch(err){
@@ -84,18 +95,8 @@ function App() {
     }
   };
 
-  const submitVote = async (e) => {
-    e.preventDefault();
-    try{
-        const response= await axios.post("http://localhost:3001/vote", {
-            votes: userState.votes
-        });
-        localStorage.setItem('votes', response.data.votes);
-        setUserState(response.data);
-    }catch(err){
-        console.log(err);
-    }
-}
+  //When the user clicks the submit vote btn, the value of the radio btn chosen is added to the array of user votes. It is by default an empty string.
+
 
   return (
     <>
@@ -129,8 +130,6 @@ function App() {
                 render={(props) =>{
                   return(
                     <PollList
-                    handleInput={handleInput}
-                    submitVote = {submitVote}
                     />
                   );
                 }}/>

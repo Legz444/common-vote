@@ -5,16 +5,11 @@ import axios from 'axios';
 
 //////Psuedo Code//////
 
-    //I need the userState from app.js. This can be the initial state---useState.
-    //I need to store the user's vote for each question in their own userData.
-    //I added a empty vote array to store their answer. I need some sort of key to connect the answer with the corresponding question? that way if a user doesn't answer ever consecutive question, the right answers still line up with the question.
+//radio button is clicked, updates the answer state to the value of that radio button, a string of the answer. 
 
-    //I need the questions answers to get a chosen value. when the radio button is clicked, the value for that answer is set. It is not yet submitted to the data, but it is set as the current answer.
-    // I need to be sure that the radio buttons and chosen value is refreshed for each user.... so maybe this needs to be a useEffect?
+//on submit the total gets set. the question gets set to the the value of the quesiton. the answer gets set to the value of the chosen radiobtn. then in the back end this gets posted to the totals schema. The answers are kept in an array with each answer and the total of votes it has.
 
-    //I need a totals state that will update when the user votes --- useEffect
-    //I need to store the total votes from all users for each question.
-    //Another model and schema. An array of objects(question answer pairs). Everytime a vote is submitted, a counter function updates the state of total votes for that question. I connect the votes and the questions somehow? Do I just pass in the questions somehow in my counter function? How would it know it is this.question?
+// on submit, the users answer gets set. the question gets set to the value of the question. the answer gets set to the value of the chosen radiobtn. then in the back end this gets posted to the users answers array. 
 
 export default function Vote(props){
 //////States//////
@@ -26,41 +21,31 @@ const [userState, setUserState] = useState({
     dob: "",
     isRegistered: false, 
     isLoggedIn: false,
-    votes: ""
   });
-// the initial state of the user is either, empty if they haven't voted on this question already, or whatever previous value they chose.
-    // const [userState, setUserState] = useState({
-    //     votes: ""
-    // });
+const [answer, setAnswer] = useState("")
 
-    //this initial state of radio buttons is empty
-    // const [answer, setAnswer] = useState("");
+const [totals, setTotals] = useState({})
 
-    //BACKEND?
-    //the initial state of the totals is the accumulation of all votes for that question
-    //I need the total for each answer for that question. I need to pass in the answers index and total value. do I spread in the poll??s
-    // const[total, setTotal] = useState({
-    //     question: "",
-    //     answers: [
+// useEffect(() => {
+//     (async() => {
+//         try{
+//             const response = await axios.post('/vote', {
+//                 ...totals,
 
-    //     ]
-    // });
+//             })
+//             setTotals(response.data);
 
-    useEffect(() => {
-        (async() => {             
-        try{
-            const response = await axios.post("./http://localhost:3001/vote", {
-                votes: userState.votes
-            })
-            const data = await response.json();
-            setUserState(data.userState);  
-        }catch(e){
-            console.log(e);
-        }
-        }) ()    
-    }, [])
+//         }catch(err){
+//             console.error(err);
+//         }
+//     })
+// }, [totals])
+
+
+// const [votes, setVotes] = useState({});
+
+
 //////Variables//////
-    const poll = props.poll;
     const voterDemographic = props.poll.voterDemographic;
     const currentLeadership = props.poll.currentLeadership;
     const currentSystem = props.poll.currentSystem;
@@ -82,19 +67,42 @@ const [userState, setUserState] = useState({
 
 //////Voting functionality//////
 
-//when a radio button is clicked, update the value for that questions answers to the value of the targeted radio button.
-    // const setValue = (e) => {
-    //     setAnswer({
-    //         ...answer,
-    //         ...{[e.target.name] : e.target.value}
-    //     });
-    //     console.log(e.target);
-    // };
+//set answers chosen raio btn value
+const setValue = (e) => {
+    setAnswer({
+      ...answer,
+      ...{[e.target.name] : e.target.value}
+  });
+    console.log(e.target.value);
+  };
 
-//when submit button is clicked, update the state for the user. Also update the totals data for the charts.
-
-//Total calculation function//
-
+  //on sumbit, the totals and user vote are set to the radio btn value.
+  const submitVote = async (e) => {
+    e.preventDefault();
+    try{
+        const response = await axios.post("http://localhost:3001/vote", {
+            votes: userState.votes
+        });
+        localStorage.setItem('votes', JSON.stringify(response.data.votes))
+        setTotals({
+            ...totals,
+            ...{answer}
+        })
+        console.log(totals);
+        // setVotes({
+        //     ...votes,
+        //     ...{answer}
+        // });
+        // console.log(votes);
+        setUserState({
+            ...userState,
+            ...{answer}
+        });
+        console.log(userState);
+    }catch(err){
+        console.log(err);
+    }   
+}
 
     return(
         <>
@@ -112,7 +120,7 @@ const [userState, setUserState] = useState({
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
-                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                            <InputGroup.Radio type="radio" name={item.question} aria-label="Radio-btn" value={i} onClick={setValue} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
@@ -120,7 +128,7 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
                                     <canvas id="dis-chart"></canvas>
@@ -142,7 +150,7 @@ const [userState, setUserState] = useState({
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
-                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                            <InputGroup.Radio type="radio" name={item.question} aria-label="Radio-btn" value={i} onClick={setValue} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
@@ -150,7 +158,7 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
                                     <canvas id="dis-chart"></canvas>
@@ -172,7 +180,7 @@ const [userState, setUserState] = useState({
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
-                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                            <InputGroup.Radio type="radio" name={item.question} aria-label="Radio-btn" value={i} onClick={setValue} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
@@ -180,7 +188,7 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
                                     <canvas id="dis-chart"></canvas>
@@ -202,7 +210,7 @@ const [userState, setUserState] = useState({
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
-                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                            <InputGroup.Radio type="radio" name={item.question} aria-label="Radio-btn" value={i} onClick={setValue} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
@@ -210,7 +218,7 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
                                     <canvas id="dis-chart"></canvas>
@@ -232,7 +240,7 @@ const [userState, setUserState] = useState({
                                                     <>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
-                                                            <InputGroup.Radio type="radio" aria-label="Radio-btn" onClick={props.handleInput} ></InputGroup.Radio>
+                                                            <InputGroup.Radio type="radio" name={item.question} aria-label="Radio-btn" value={i} onClick={setValue} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
@@ -240,7 +248,7 @@ const [userState, setUserState] = useState({
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={props.submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
                                     <canvas id="dis-chart"></canvas>
