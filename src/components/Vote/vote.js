@@ -1,6 +1,6 @@
 import './vote.css';
 import React, { useState, useEffect } from 'react';
-import {Card, InputGroup, Accordion } from 'react-bootstrap';
+import {Card, InputGroup, Accordion, CardGroup } from 'react-bootstrap';
 import axios from 'axios';
 // import PolarChart from "./Charts/Charts";
 
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 //radio button is clicked, updates the answer state to the value of that radio button, a string of the answer. 
 
-//on submit the total gets set. the question gets set to the the value of the quesiton. the answer gets set to the value of the chosen radiobtn. then in the back end this gets posted to the totals schema. The answers are kept in an array with each answer and the total of votes it has.
+//on submit the total gets set. the question gets set to the the value of the quesiton. the answer gets set to the value of the chosen radiobtn. then in the back end this gets posted to the totals. The answers are kept in an array with each answer and the total of votes it has.
 
 // on submit, the users answer gets set. the question gets set to the value of the question. the answer gets set to the value of the chosen radiobtn. then in the back end this gets posted to the users answers array. 
 
@@ -97,26 +97,6 @@ const submitVote = async (e) => {
     console.log(totals);
     // makeVisible();
 };
-      // let parsedAns = voterDemographic.map(item => {
-    //     const grabAnswers =Object.entries(item);
-    //     return (grabAnswers[1]);
-    // })
-    // console.log(parsedAns);
-
-//counter function
-//iterate over the totalArr. If object.key===item.question, then count how many times each answer is in the array.
-// const counter = () =>{
-//     let count = 0
-//     let disp = document.getElementsByClassName("display");
-    
-//     // if(answer.length) {
-//     //     count++;
-//     //     disp.innerHTML = count;
-//     //     totalArr.push("answer" + (count))
-//     // }
-//     console.log(totalArr);
-// }
-// counter();
 
 
     return(
@@ -129,7 +109,8 @@ const submitVote = async (e) => {
                             return(
                                 <>
                                 <Accordion.Collapse eventKey="0">
-                                <Card>
+                                <Card className="container">
+                                    <div className="left-side">
                                     <h3 className="question">{item.question}</h3>
                                         {item.answers && item.answers.length ? item.answers.map(i => {
                                             
@@ -144,13 +125,14 @@ const submitVote = async (e) => {
                                                     </>
                                             )
                                         }): ""}
+                                    
                                     <div>
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="50px" height="50px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    </div>
                                     {/* <canvas id="dis-chart"></canvas> */}
-                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
-                                    
+                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>   
                                 </Card>
                                 </Accordion.Collapse>
                                 </>
@@ -163,6 +145,7 @@ const submitVote = async (e) => {
                         <>
                         <Accordion.Collapse eventKey="1">
                         <Card>
+                        <div className="left-side">
                         <h3 className="question">{item.question}</h3>
                         {item.answers && item.answers.length ? item.answers.map(i => {
                                             return(
@@ -181,8 +164,9 @@ const submitVote = async (e) => {
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
-                                    
-                                    <canvas id="dis-chart"></canvas>
+                                    </div>
+                                    {/* <canvas id="dis-chart"></canvas> */}
+                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -195,6 +179,7 @@ const submitVote = async (e) => {
                         <>
                         <Accordion.Collapse eventKey="2">
                         <Card>
+                        <div className="left-side">
                         <h3 className="question">{item.question}</h3>
                         {item.answers && item.answers.length ? item.answers.map(i => {
                                             return(
@@ -211,6 +196,7 @@ const submitVote = async (e) => {
                                     <div>
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
+                                    </div>
                                     </div>
                                     <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                                     
@@ -226,6 +212,7 @@ const submitVote = async (e) => {
                         <>
                         <Accordion.Collapse eventKey="3">
                         <Card>
+                        <div className="left-side">
                         <h3 className="question">{item.question}</h3>
                         {item.answers && item.answers.length ? item.answers.map(i => {
                                             return(
@@ -243,6 +230,7 @@ const submitVote = async (e) => {
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    </div>
                                     <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                         </Card>
                         </Accordion.Collapse>
@@ -256,6 +244,7 @@ const submitVote = async (e) => {
                         <>
                         <Accordion.Collapse eventKey="4">
                         <Card>
+                        <div className="left-side">
                         <h3 className="question">{item.question}</h3>
                         {item.answers && item.answers.length ? item.answers.map(i => {
                                             return(
@@ -272,6 +261,7 @@ const submitVote = async (e) => {
                                     <div>
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
+                                    </div>
                                     </div>
                                     <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                         </Card>
