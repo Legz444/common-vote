@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Context } from "react";
 import { Route, Switch } from 'react-router-dom';
 import axios from "axios";
 
@@ -11,6 +11,8 @@ import PollList from "./Vote/pollList";
 
 
 function App() {
+  
+
   const [userState, setUserState] = useState({
     email: "",
     password: "",
@@ -19,7 +21,8 @@ function App() {
     dob: "",
     isRegistered: false, 
     isLoggedIn: false,
-    id: ""
+    id: "",
+    votes: ""
   });
   
   //initial state of logged in is false. useEffect allows that to change when a token is given to the user in local storage
@@ -32,12 +35,6 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  //use effect allows the votes to be pushed into the users votes array.
-  // useEffect((votes) => {
-  //   userState.votes.length ? {
-  //     votes.push(userState.votes)
-  //   } : "0"    
-  // }, [userState])
 
 
   //event listener sets isloggedin to false when the user logs out
@@ -67,10 +64,12 @@ function App() {
         lastName: userState.lastName,
         dob: userState.dob,
         isRegistered: userState.isRegistered,
-        id: userState.id
+        id: userState.id,
+        votes: userState.votes
       });
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('id', JSON.stringify(response.data.id));
+      localStorage.setItem('email', response.data.email);
+      localStorage.setItem('id', response.data._id);
       setIsLoggedIn(true);
       console.log("User has registered");
     }catch(err){
@@ -87,7 +86,8 @@ function App() {
         password: userState.password
       });
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('id', response.data.id);
+      localStorage.setItem('email', response.data.email);
+      localStorage.setItem('id', response.data._id);
       setIsLoggedIn(true)
       console.log("User is logged in");
     }catch(err){

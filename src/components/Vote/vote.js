@@ -2,6 +2,8 @@ import './vote.css';
 import React, { useState, useEffect } from 'react';
 import {Card, InputGroup, Accordion } from 'react-bootstrap';
 import axios from 'axios';
+// import PolarChart from "./Charts/Charts";
+
 
 //////Psuedo Code//////
 
@@ -21,28 +23,40 @@ const [userState, setUserState] = useState({
     dob: "",
     isRegistered: false, 
     isLoggedIn: false,
-  });
-const [answer, setAnswer] = useState("")
+    votes: ""
+});
 
-const [totals, setTotals] = useState({})
+useEffect(()=> {
+    (async () => {
+        try{
+            const response = await axios.post("http://localhost:3001/vote", {
+                votes: userState.votes,
+            });
+            console.log(response);
+            localStorage.setItem('votes', response.data.votes);
+        }catch(err){
+            console.error(err);
+        }
+}) ();
+}, [userState]);
 
-// useEffect(() => {
-//     (async() => {
-//         try{
-//             const response = await axios.post('/vote', {
-//                 ...totals,
+const [ answer, setAnswer ] = useState({});
 
-//             })
-//             setTotals(response.data);
+const [ totals, setTotals ] = useState({});
 
-//         }catch(err){
-//             console.error(err);
-//         }
-//     })
-// }, [totals])
-
-
-// const [votes, setVotes] = useState({});
+useEffect(()=> {
+    (async () => {
+        try{
+            const response = await axios.post("http://localhost:3001/vote", {
+                totals: totals.totals,
+            });
+            console.log(response);
+            localStorage.setItem('totals', response.data.totals);
+        }catch(err){
+            console.error(err);
+        }
+}) ();
+}, [totals]);
 
 
 //////Variables//////
@@ -52,60 +66,62 @@ const [totals, setTotals] = useState({})
     const economics = props.poll.economics;
     const foreignPolicy = props.poll.foreignPolicy;
 
-    // // //Parse out answers array from object to be mapped in.---How to loop this function over all categories??
-    // // //map over the category and return an array of each objects answers
-    // let parsedAns = voterDemographic.map(item => {
+
+
+//////Voting functionality//////
+
+//set answers chosen radio btn value
+const setValue = (e) => {
+    setAnswer({
+    ...answer,
+    ...{[e.target.name] : e.target.value}
+    });
+    console.log(e.target.value);
+};
+
+// const makeVisible= () => {
+//     let element = document.getElementsByClassName('right-side');
+//     element.style.visibility = "visible";
+// }
+const submitVote = async (e) => {
+    e.preventDefault();
+    setUserState({
+        ...userState,
+        votes: {...answer}
+    })
+    console.log(userState);
+    setTotals({
+        ...totals,
+        totals: {...answer}
+    })
+    console.log(totals);
+    // makeVisible();
+};
+      // let parsedAns = voterDemographic.map(item => {
     //     const grabAnswers =Object.entries(item);
     //     return (grabAnswers[1]);
     // })
     // console.log(parsedAns);
-    // // // map over parsedAns array, for every item, return that item's index [1] which is just the answers.
-    // let a = parsedAns.map(i => {
-    //     return i[1]
-    // })
-    // console.log(a);
 
-//////Voting functionality//////
+//counter function
+//iterate over the totalArr. If object.key===item.question, then count how many times each answer is in the array.
+// const counter = () =>{
+//     let count = 0
+//     let disp = document.getElementsByClassName("display");
+    
+//     // if(answer.length) {
+//     //     count++;
+//     //     disp.innerHTML = count;
+//     //     totalArr.push("answer" + (count))
+//     // }
+//     console.log(totalArr);
+// }
+// counter();
 
-//set answers chosen raio btn value
-const setValue = (e) => {
-    setAnswer({
-      ...answer,
-      ...{[e.target.name] : e.target.value}
-  });
-    console.log(e.target.value);
-  };
-
-  //on sumbit, the totals and user vote are set to the radio btn value.
-  const submitVote = async (e) => {
-    e.preventDefault();
-    try{
-        const response = await axios.post("http://localhost:3001/vote", {
-            votes: userState.votes
-        });
-        localStorage.setItem('votes', JSON.stringify(response.data.votes))
-        setTotals({
-            ...totals,
-            ...{answer}
-        })
-        console.log(totals);
-        // setVotes({
-        //     ...votes,
-        //     ...{answer}
-        // });
-        // console.log(votes);
-        setUserState({
-            ...userState,
-            ...{answer}
-        });
-        console.log(userState);
-    }catch(err){
-        console.log(err);
-    }   
-}
 
     return(
         <>
+            <div className="vote page">
             <Accordion className="voteAccordion" defaultActiveKey="0">
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey= "0" >Basic Voter Information</Accordion.Toggle>
@@ -116,6 +132,7 @@ const setValue = (e) => {
                                 <Card>
                                     <h3 className="question">{item.question}</h3>
                                         {item.answers && item.answers.length ? item.answers.map(i => {
+                                            
                                             return(
                                                     <>
                                                     <InputGroup className="mb-3">
@@ -128,10 +145,12 @@ const setValue = (e) => {
                                             )
                                         }): ""}
                                     <div>
-                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
+                                        <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="50px" height="50px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
-                                    <canvas id="dis-chart"></canvas>
+                                    {/* <canvas id="dis-chart"></canvas> */}
+                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
+                                    
                                 </Card>
                                 </Accordion.Collapse>
                                 </>
@@ -154,6 +173,7 @@ const setValue = (e) => {
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
+                                                    
                                                     </>
                                             )
                                         }): ""}
@@ -161,6 +181,7 @@ const setValue = (e) => {
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
+                                    
                                     <canvas id="dis-chart"></canvas>
                         </Card>
                         </Accordion.Collapse>
@@ -191,7 +212,8 @@ const setValue = (e) => {
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
-                                    <canvas id="dis-chart"></canvas>
+                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
+                                    
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -221,7 +243,7 @@ const setValue = (e) => {
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
-                                    <canvas id="dis-chart"></canvas>
+                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                         </Card>
                         </Accordion.Collapse>
                     </>
@@ -251,14 +273,28 @@ const setValue = (e) => {
                                         <input type="image" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" name="vote-btn" className="vote-btn" width="35px" height="35px" onClick={submitVote}></input>
                                         <p>Vote</p>
                                     </div>
-                                    <canvas id="dis-chart"></canvas>
+                                    <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                         </Card>
                         </Accordion.Collapse>
                     </>
                 ) }): ""}
                 </Card>
             </Accordion>
+            </div>
         </>
     )
 }
 
+
+    // // //Parse out answers array from object to be mapped in.---How to loop this function over all categories??
+    // // //map over the category and return an array of each objects answers
+    // let parsedAns = voterDemographic.map(item => {
+    //     const grabAnswers =Object.entries(item);
+    //     return (grabAnswers[1]);
+    // })
+    // console.log(parsedAns);
+    // // // map over parsedAns array, for every item, return that item's index [1] which is just the answers.
+    // let a = parsedAns.map(i => {
+    //     return i[1]
+    // })
+    // console.log(a);

@@ -3,11 +3,18 @@ body {
   height: 100%;
   width: 100%;
 }
-
+.vote-page{
+  display: flex;
+  flex-direction: column;
+}
 .voteAccordion{
+    order: 1;
     max-width: 80%;
     margin: auto;
 }
 .question{
     font-size: 1em;
+}
+.right-side{
+order: 2;
 }

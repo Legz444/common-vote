@@ -1,6 +1,7 @@
 import "./navBar.css";
 import React from 'react';
 
+
 function NavBar(props) {
     let navLinks = [
         <li className="navlinks" key={1}>

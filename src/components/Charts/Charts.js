@@ -2,14 +2,20 @@
 // import { Polar } from 'react-chartjs-2';
 
 
-// const PolarChart = (props) => {
+// const ctx = document.getElementsById("dis-chart");
+
+// const PolarChart = () => {
+
 //     return(
 //         <>
 //         <div className="chart">
 //             <Polar
 //             data{{
-//                 labels: [array of answer names],
-//                 data: [array of the answer values]
+//                 labels: [props.voterDemographic.question],
+//                 datasets: [{
+//                     label: "",
+//                     backgroundColor: "rgba(75,192,192,0.4"
+//                 }]
 
 //             }}
 //             height={400}
