@@ -22,7 +22,7 @@ The user has the ability to log out and log back in.
 I wanted the user to see a slightly animated chart of the total votes by all users for each question. When the user submits a vote, the Chart is displayed on the corresponding card. It shows their vote as well as all other votes that have been submitted so a user can immediately see where they and the rest of the population stand on these issues.
 
 ### Write my own Data
-I wanted to create my own data and learn the in's and outs of structuring that data so it can be efficiently used through out the application. I created an object of political categories that are considered to be of importance to an average voter. Each Categorie is an array of objects, different questions and an answers array. 
+I wanted to create my own data and learn the in's and outs of structuring that data so it can be efficiently used through out the application. I created an object of political categories that are considered to be of importance to an average voter. Each Category is an array of objects, different questions and an answers array. 
 
 I started with MVP of just hard coding this data into the back end in a get route.
 

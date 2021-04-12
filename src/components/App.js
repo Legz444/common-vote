@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState, useEffect, Context } from "react";
 import { Route, Switch } from 'react-router-dom';
 import axios from "axios";
@@ -8,7 +9,8 @@ import RegisterForm from './Register/register';
 import LogInForm from './LogInForm/login';
 import LogOut from './LogOut/logout';
 import PollList from "./Vote/pollList";
-
+import Profile from "./Profile/profile";
+import About from "./About/whyVote";
 
 function App() {
   
@@ -107,6 +109,13 @@ function App() {
       <NavBar isLoggedIn={isLoggedIn}/>
       <div className="main">
         <Switch>
+        <Route  
+            path="/about"
+            render={(props) => {
+              return (
+                <About/>
+              );
+            }}/>
           <Route  
             path="/register"
             render={(props) => {
@@ -115,6 +124,13 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   handleInput={handleInput}
                   handleRegister={handleRegister}/>
+              );
+            }}/>
+            <Route  
+            path="/profile"
+            render={(props) => {
+              return (
+                <Profile/>
               );
             }}/>
             <Route

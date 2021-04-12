@@ -3,8 +3,9 @@ import '../LogInForm/login.css';
 export default function RegisterForm (props) {
     return(
         <>
-        <img className="mb-4" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" alt="" width="72" height="72"/>
+        
         <form className="form-signin">
+        <img className="mx-auto mb-4" src="https://res.cloudinary.com/legz444/image/upload/v1616790789/Common_2_axarsa.png" alt="" width="100" height="100"/>
             <h1 className="h3 mb-3 fw-normal">Welcome to Common Vote. Please Register Below</h1>
 
             <div className="form-floating">

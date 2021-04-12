@@ -1,0 +1,14 @@
+.profile_container{
+    display: grid;
+    grid-template-columns: 40% auto;
+    column-gap: 25px;
+}
+.left{
+grid-column-start: 1;
+grid-column-end: 1;
+}
+
+.right{
+grid-column-start: 2;
+grid-column-end: 2;
+}

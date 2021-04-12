@@ -1,11 +1,11 @@
-.nav-img{
+/* .nav-img{
     display: inline-flex;
 }
 .navbar{
     display: inline-flex;
     width: 80vw;
     height: 210px;
-    background-color: white;
+    /* background-color: white; */
 }
 .navlinks{
     display: inline-flex;
@@ -37,4 +37,4 @@
 .navlinks :hover :before {
 			opacity: 1;
 			transform: translateY(5px); /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
-}
+} */
