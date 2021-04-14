@@ -7,11 +7,11 @@ export default function LogInForm (props) {
             <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div className="form-floating">
-                <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={props.handleInput}/>
+                <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={props.handleInput} name="email" value={props.userState.email}/>
                 <label htmlFor="floatingInput">Email address</label>
             </div>
             <div className="form-floating">
-            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={props.handleInput}/>
+            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={props.handleInput} name="password" value={props.userState.password}/>
             <label htmlFor="floatingPassword">Password</label>
             </div>
 

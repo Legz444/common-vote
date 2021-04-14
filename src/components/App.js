@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, Context } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from 'react-router-dom';
 import axios from "axios";
 
@@ -59,7 +59,7 @@ function App() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try{
-      const response = await axios.post("http://localhost:3001/register", {
+      const response = await axios.post("https://commonvote.herokuapp.com/register", {
         email: userState.email,
         password: userState.password,
         firstName: userState.firstName,
@@ -73,7 +73,6 @@ function App() {
       localStorage.setItem('email', response.data.email);
       localStorage.setItem('id', response.data._id);
       setIsLoggedIn(true);
-      console.log("User has registered");
     }catch(err){
       console.log(err);
     }
@@ -83,7 +82,7 @@ function App() {
   const handleLogIn = async (e) => {
     e.preventDefault();
     try{
-      const response = await axios.post("http://localhost:3001/", {
+      const response = await axios.post("https://commonvote.herokuapp.com/login", {
         email: userState.email,
         password: userState.password
       });
@@ -91,13 +90,10 @@ function App() {
       localStorage.setItem('email', response.data.email);
       localStorage.setItem('id', response.data._id);
       setIsLoggedIn(true)
-      console.log("User is logged in");
     }catch(err){
       console.log(err)
     }
   };
-
-  //When the user clicks the submit vote btn, the value of the radio btn chosen is added to the array of user votes. It is by default an empty string.
 
 
   return (
@@ -130,7 +126,8 @@ function App() {
             path="/profile"
             render={(props) => {
               return (
-                <Profile/>
+                <Profile
+                userState={userState}/>
               );
             }}/>
             <Route
@@ -156,7 +153,8 @@ function App() {
                     <LogInForm
                       isLoggedIn={isLoggedIn}
                       handleInput={handleInput}
-                      handleLogIn={handleLogIn}/>
+                      handleLogIn={handleLogIn}
+                      userState={userState}/>
                   );
                 }}/>
         </Switch>

@@ -1,28 +1,24 @@
 // import React from 'react';
-// import { Polar } from 'react-chartjs-2';
+// import { Bar } from 'react-chartjs-2';
 
 
-// const ctx = document.getElementsById("dis-chart");
+// const Chart = (props) => {
+//     let totals = props.totals;
+//     let questions = Object.keys(totals);
+//     let answers =Object.values(totals);
 
-// const PolarChart = () => {
 
 //     return(
 //         <>
-//         <div className="chart">
-//             <Polar
-//             data{{
-//                 labels: [props.voterDemographic.question],
-//                 datasets: [{
-//                     label: "",
-//                     backgroundColor: "rgba(75,192,192,0.4"
-//                 }]
-
+//         <Chart
+//             data={{
+//                 labels: [{questions}]
 //             }}
 //             height={400}
 //             width={400}
-            
-//             /> 
-//         </div>
+//         />
 //         </>
 //     )
 // }
+
+// export default Chart;

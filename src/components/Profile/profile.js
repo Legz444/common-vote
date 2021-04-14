@@ -15,6 +15,9 @@ const Profile = (props)  =>{
                 </img>
             </div>
             <div className="right">
+                <h1>Welcome {props.userState.firstName}</h1>
+                <h3>{props.userState.email}</h3>
+                <h3>See your votes Below:</h3>
                 
             </div>
         </div>

@@ -1,8 +1,9 @@
 import './vote.css';
 import React, { useState, useEffect } from 'react';
-import {Card, InputGroup, Accordion, CardGroup } from 'react-bootstrap';
+import {Card, InputGroup, Accordion } from 'react-bootstrap';
 import axios from 'axios';
-// import PolarChart from "./Charts/Charts";
+
+
 
 
 //////Psuedo Code//////
@@ -29,7 +30,7 @@ const [userState, setUserState] = useState({
 useEffect(()=> {
     (async () => {
         try{
-            const response = await axios.post("http://localhost:3001/vote", {
+            const response = await axios.post("https://commonvote.herokuapp.com/vote", {
                 votes: userState.votes,
             });
             console.log(response);
@@ -47,7 +48,7 @@ const [ totals, setTotals ] = useState({});
 useEffect(()=> {
     (async () => {
         try{
-            const response = await axios.post("http://localhost:3001/vote", {
+            const response = await axios.post("https://commonvote.herokuapp.com/vote/totals", {
                 totals: totals.totals,
             });
             console.log(response);
@@ -70,59 +71,87 @@ useEffect(()=> {
 
 //////Voting functionality//////
 
+
+
 //set answers chosen radio btn value
 const setValue = (e) => {
     setAnswer({
     ...answer,
     ...{[e.target.name] : e.target.value}
     });
-    console.log(e.target.value);
 };
 
-// const makeVisible= () => {
-//     let element = document.getElementsByClassName('right-side');
-//     element.style.visibility = "visible";
+// const countVal = () =>{
+//     let count = 0
+//     let btn = e.target
+//     let display = document.getElementsByClassName("display");
+//     btn.onClick = () => {
+//         count+=1;
+//         display.innerHTML = count;
+//     }
 // }
+// countVal();
+
 const submitVote = async (e) => {
     e.preventDefault();
     setUserState({
         ...userState,
         votes: {...answer}
-    })
-    console.log(userState);
+    });
     setTotals({
         ...totals,
         totals: {...answer}
-    })
-    console.log(totals);
-    // makeVisible();
+    });
+
 };
 
+//Function to count occurances//
+//function passes an array and the values within it. Return back the reduced array passing in an accumulator and an item(single index of arr).
+//return back to me, if the value is the same as the item, accumulate that items occurance by 1. if not, show me the item. Start at 0.
+// const countTotals = function(arr, val) {
+//     return arr.reduce((acc, item) => {
+//         return (val === item ? acc +1 : acc)
+//     }, 0);
+// };
+//Function to map over the totals state variable and seperate out the keys. We need these so we can count the totals instances of each answer.
+// x = item.question
+// const createDataKeys = function(x){
+//     {props.totals.length ? props.totals.map(key => {
+//         if(key === x){
+//             Object.values(key);
+//         }
+//     }): ""};
+// };
 
     return(
         <>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <div className="vote page">
             <Accordion className="voteAccordion" defaultActiveKey="0">
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey= "0" >Basic Voter Information</Accordion.Toggle>
                         {voterDemographic.length ? voterDemographic.map(item => {
+                            // const dataKeys = createDataKeys(item.question);
                             return(
                                 <>
                                 <Accordion.Collapse eventKey="0">
                                 <Card className="container">
                                     <div className="left-side">
                                     <h3 className="question">{item.question}</h3>
+                                    
                                         {item.answers && item.answers.length ? item.answers.map(i => {
-                                            
+                                            // let data = countTotals(dataKeys, i)
+                                            // console.log(data);
                                             return(
                                                     <>
+                                                    <h5>Total votes = <span className="display">0</span></h5>
                                                     <InputGroup className="mb-3">
                                                         <InputGroup.Prepend>
                                                             <InputGroup.Radio type="radio" name={item.question} aria-label="Radio-btn" value={i} onClick={setValue} ></InputGroup.Radio>
                                                         </InputGroup.Prepend>
                                                         <InputGroup.Text>{i}</InputGroup.Text>
                                                     </InputGroup>
-                                                    </>
+                                                </>
                                             )
                                         }): ""}
                                     
@@ -131,7 +160,6 @@ const submitVote = async (e) => {
                                         <p>Vote</p>
                                     </div>
                                     </div>
-                                    {/* <canvas id="dis-chart"></canvas> */}
                                     <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>   
                                 </Card>
                                 </Accordion.Collapse>
@@ -165,7 +193,6 @@ const submitVote = async (e) => {
                                         <p>Vote</p>
                                     </div>
                                     </div>
-                                    {/* <canvas id="dis-chart"></canvas> */}
                                     <div className="right-side" width="250px" height="250px"><img src="https://res.cloudinary.com/legz444/image/upload/v1618038018/chartjs_liybbp.png" width="250px" height="250px"/></div>
                         </Card>
                         </Accordion.Collapse>

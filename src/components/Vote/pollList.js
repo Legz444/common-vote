@@ -7,7 +7,7 @@ const PollList = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get('http://localhost:3001/vote', {
+            const response = await axios.get('https://commonvote.herokuapp.com/vote', {
                 headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('token')
             }});
