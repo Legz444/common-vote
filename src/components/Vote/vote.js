@@ -73,12 +73,22 @@ useEffect(()=> {
 
 
 
-//set answers chosen radio btn value
+//set answers chosen radio btn value and display click
 const setValue = (e) => {
     setAnswer({
     ...answer,
     ...{[e.target.name] : e.target.value}
     });
+    const countVal = () =>{
+        let count = 0
+        let btn = e.target
+        let display = document.getElementsByClassName("display");
+        btn.onClick = () => {
+            count+=1;
+            display.innerHTML = count;
+        }
+    }
+    countVal();
 };
 
 
@@ -94,16 +104,6 @@ const submitVote = async (e) => {
         ...totals,
         totals: {...answer}
     });
-    const countVal = () =>{
-        let count = 0
-        let btn = e.target
-        let display = document.getElementsByClassName("display");
-        btn.onClick = () => {
-            count+=1;
-            display.innerHTML = count;
-        }
-    }
-    countVal();
 };
 
 //Function to count occurances//
