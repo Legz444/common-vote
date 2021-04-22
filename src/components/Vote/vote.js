@@ -81,16 +81,8 @@ const setValue = (e) => {
     });
 };
 
-// const countVal = () =>{
-//     let count = 0
-//     let btn = e.target
-//     let display = document.getElementsByClassName("display");
-//     btn.onClick = () => {
-//         count+=1;
-//         display.innerHTML = count;
-//     }
-// }
-// countVal();
+
+
 
 const submitVote = async (e) => {
     e.preventDefault();
@@ -102,7 +94,16 @@ const submitVote = async (e) => {
         ...totals,
         totals: {...answer}
     });
-
+    const countVal = () =>{
+        let count = 0
+        let btn = e.target
+        let display = document.getElementsByClassName("display");
+        btn.onClick = () => {
+            count+=1;
+            display.innerHTML = count;
+        }
+    }
+    countVal();
 };
 
 //Function to count occurances//
@@ -114,7 +115,7 @@ const submitVote = async (e) => {
 //     }, 0);
 // };
 //Function to map over the totals state variable and seperate out the keys. We need these so we can count the totals instances of each answer.
-// x = item.question
+// const x = item.question
 // const createDataKeys = function(x){
 //     {props.totals.length ? props.totals.map(key => {
 //         if(key === x){
@@ -132,6 +133,7 @@ const submitVote = async (e) => {
                     <Accordion.Toggle as={Card.Header} eventKey= "0" >Basic Voter Information</Accordion.Toggle>
                         {voterDemographic.length ? voterDemographic.map(item => {
                             // const dataKeys = createDataKeys(item.question);
+                            // console.log(dataKeys);
                             return(
                                 <>
                                 <Accordion.Collapse eventKey="0">
