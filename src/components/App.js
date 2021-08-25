@@ -30,14 +30,16 @@ function App() {
   //initial state of logged in is false. useEffect allows that to change when a token is given to the user in local storage
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    if(localStorage.token) {
-      setIsLoggedIn(true);
-    }else{
-      setIsLoggedIn(false);
-    }
+    loggedIn();
   }, [isLoggedIn]);
 
-
+const loggedIn=()=>{
+  if(localStorage.token) {
+    setIsLoggedIn(true);
+  }else{
+    setIsLoggedIn(false);
+  }
+}
 
   //event listener sets isloggedin to false when the user logs out
   const handleLogOut = () => {
@@ -50,7 +52,7 @@ function App() {
   };
 
 
-  //event listener sets the value for the targeting input fields-register, login, voting radio btns
+  //event listener sets the value for the targeting input fields-register, login
   const handleInput = (e) => {
     setUserState({...userState, [e.target.name]: e.target.value });
   };
@@ -109,7 +111,8 @@ function App() {
             path="/about"
             render={(props) => {
               return (
-                <About/>
+                <About
+                loggedIn={loggedIn}/>
               );
             }}/>
           <Route  
@@ -118,6 +121,7 @@ function App() {
               return (
                 <RegisterForm
                   isLoggedIn={isLoggedIn}
+                  loggedIn={loggedIn}
                   handleInput={handleInput}
                   handleRegister={handleRegister}/>
               );
@@ -127,7 +131,8 @@ function App() {
             render={(props) => {
               return (
                 <Profile
-                userState={userState}/>
+                userState={userState}
+                loggedIn={loggedIn}/>
               );
             }}/>
             <Route
@@ -143,6 +148,7 @@ function App() {
                 render={(props) =>{
                   return(
                     <PollList
+                    loggedIn={loggedIn}
                     />
                   );
                 }}/>
@@ -152,9 +158,11 @@ function App() {
                   return(
                     <LogInForm
                       isLoggedIn={isLoggedIn}
+                      loggedIn={loggedIn}
                       handleInput={handleInput}
                       handleLogIn={handleLogIn}
-                      userState={userState}/>
+                      userState={userState}
+                      />
                   );
                 }}/>
         </Switch>

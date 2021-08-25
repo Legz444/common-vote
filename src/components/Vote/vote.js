@@ -16,6 +16,7 @@ import axios from 'axios';
 
 export default function Vote(props){
 //////States//////
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 const [userState, setUserState] = useState({
     email: "",
     password: "",
@@ -75,35 +76,29 @@ useEffect(()=> {
 
 //set answers chosen radio btn value and display click
 const setValue = (e) => {
-    setAnswer({
-    ...answer,
-    ...{[e.target.name] : e.target.value}
-    });
-    const countVal = () =>{
-        let count = 0
-        let btn = e.target
-        let display = document.getElementsByClassName("display");
-        btn.onClick = () => {
-            count+=1;
-            display.innerHTML = count;
-        }
+    if(isLoggedIn === true){
+        setAnswer({
+        ...answer,
+        ...{[e.target.name] : e.target.value}
+        });
     }
-    countVal();
 };
 
 
 
 
 const submitVote = async (e) => {
-    e.preventDefault();
-    setUserState({
-        ...userState,
-        votes: {...answer}
-    });
-    setTotals({
-        ...totals,
-        totals: {...answer}
-    });
+    if(isLoggedIn === true) {
+        e.preventDefault();
+        setUserState({
+            ...userState,
+            votes: {...answer}
+        });
+        setTotals({
+            ...totals,
+            totals: {...answer}
+        });
+    }
 };
 
 //Function to count occurances//
